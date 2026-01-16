@@ -3,7 +3,6 @@
 Allows users to find the perfect teammates for hackathons, class assignments, and personal initiatives; also offers a seamless file upload and sharing feature, making it simple to exchange important documents and resources.
 
 ## Table of contents
-- [Demo](#demo)
 - [Features](#features)
 - [Built with](#built-with)
 - [Getting started](#getting-started)
@@ -14,9 +13,6 @@ Allows users to find the perfect teammates for hackathons, class assignments, an
 - [Contributing](#contributing)
 - [Contributors](#contributors)
 - [Roadmap / Next steps](#roadmap--next-steps)
-
-## Demo
-(Insert link to a living demo or screenshots here — you can add images to the repo and reference them.)
 
 ## Features
 - Find teammates by skill, interests, availability, and project type
