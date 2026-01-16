@@ -79,7 +79,7 @@ Contributions are welcome! To contribute:
 ## Contributors
 - Neha-Nair — [@Neha-Nair](https://github.com/nehanpnair)
 - Niharika-Paul — [@Niharika-Paul](https://github.com/Niharika-Paul)
-- Niharika-Saha — [@niharika-saha]([https://github.com/niharika-saha)
+- Niharika-Saha — [@Niharika-Saha](https://github.com/niharika-saha)
 
 ## Roadmap / Next steps
 Planned or suggested improvements:
