@@ -1,0 +1,316 @@
+<html lang="en" class="login-page">
+    <head>
+        <title>Home</title>
+        <link rel="stylesheet" href="styles.css">
+        <style>
+            html, body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            html {
+                width: 100%;
+                height: 100%;
+            }
+
+            body {
+                background-color: #f6f4f1;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            .navBar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 1000;
+                background-color: rgba(246, 244, 241, 0.5);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+            }
+
+            nav {
+                height: 50px;
+            }
+            
+            nav ul {
+                height: 100%;
+                background: none;
+            }
+            
+            nav ul li a {
+                padding: 5px 10px;
+                transition: all 0.3s ease;
+            }
+
+            nav ul li a:hover {
+                color: rgba(81, 60, 43, 0.8);
+            }
+            
+            .logo {
+                font-size: 40px;
+                color: rgba(81, 60, 43, 0.9) !important;
+                margin-top: -10px;
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            }
+
+            footer {
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                background-color: rgba(246, 244, 241, 0.5) !important;
+                backdrop-filter: blur(8px) !important;
+                -webkit-backdrop-filter: blur(8px) !important;
+                text-align: center !important;
+                height: 20px !important;
+                padding: 5px 0 !important;
+                z-index: 1000 !important;
+                font-family: baskerville, serif !important;
+                color: #5b5247 !important;
+                font-size: 14px !important;
+            }
+
+            footer p {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .bg {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(
+                    45deg,
+                    #f6f4f1,
+                    #dcc2af,
+                    #8b7355,
+                    #513c2b,
+                    #352424
+                );
+                background-size: 300% 300%;
+                animation: gradient 8s ease infinite;
+                z-index: 0;
+            }
+
+            @keyframes gradient {
+                0% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 50%;
+                }
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+
+            .bg::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                    rgba(255, 248, 240, 0.8) 0%,
+                    rgba(255, 248, 240, 0.4) 10%,
+                    rgba(255, 248, 240, 0.2) 15%,
+                    rgba(255, 248, 240, 0) 25%);
+                pointer-events: none;
+                z-index: 2;
+                mix-blend-mode: soft-light;
+            }
+
+            h1 {
+                color: #f6f4f1;
+                font-family: baskerville, serif;
+                font-size: 55px;
+                text-align: center;
+                z-index: 2;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+                position: fixed;
+                top: calc(50% - 180px);
+                left: 50%;
+                transform: translateX(-50%);
+                margin: 0;
+                font-style: italic;
+            }
+
+            #login-form {
+                background-color: rgba(246, 244, 241, 0.15);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                padding: 30px;
+                border-radius: 25px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                position: fixed;
+                top: 60%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 2;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                width: 700px;
+            }
+
+            #login-form input {
+                width: 300px !important;
+                padding: 10px;
+                margin: 10px 0;
+                border: none;
+                border-radius: 25px;
+                background-color: rgba(246, 244, 241, 0.9);
+                color: #513c2b;
+                font-family: baskerville, serif;
+                font-size: 16px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                transition: all 0.3s ease;
+                text-align: center;
+            }
+
+            #login-form input::placeholder {
+                text-align: center;
+                color: #513c2b;
+                opacity: 0.7;
+            }
+
+            #login-form input:focus {
+                outline: none;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                transform: translateY(-2px);
+            }
+
+            #login-form button[type="submit"] {
+                background-color: rgba(246, 244, 241, 0.9);
+                color: #513c2b;
+                border: none;
+                padding: 7px 30px;
+                width: 150px;
+                font-size: 18px;
+                font-family: baskerville, serif;
+                border-radius: 25px;
+                cursor: pointer;
+                transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                margin-top: 20px;
+            }
+
+            #login-form button[type="submit"]:hover {
+                transform: translateY(-5px) scale(1.05) !important;
+                background-color: #513c2b !important;
+                color: #f6f4f1 !important;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            }
+
+            #login-form button[type="submit"]:active {
+                transform: translateY(2px) !important;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2) !important;
+            }
+
+            #login-form button[type="button"] {
+                background: none;
+                border: none;
+                color: #f6f4f1;
+                text-decoration: underline;
+                font-family: baskerville, serif;
+                font-size: 14px;
+                margin-top: 15px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            #login-form button[type="button"]:hover {
+                color: rgba(246, 244, 241, 0.8);
+            }
+        </style>
+    </head>
+    <body>
+        <header class="navBar">
+            <nav>
+                <ul>
+                    <li><a href="landing.html">HOME</a></li>
+                    <li><a href="aboutUs.html">ABOUT</a></li>
+                    <li class="logo">—studyNsync—</li>
+                    <li><a href="contact.html">CONTACT</a></li>
+                    <li><a href="faqs.html">FAQS</a></li>
+                </ul>
+            </nav>
+        </header>
+        <section class="bg"></section>
+        <h1 style="color: #f6f4f1; font-family: baskerville, serif; font-size: 55px; text-align: center; z-index: 2; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); position: fixed; top: calc(50% - 180px); left: 50%; transform: translateX(-50%); margin: 0; font-style: italic;">Login</h1>
+        <form id="login-form" style="background-color: rgba(246, 244, 241, 0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 30px; border-radius: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: fixed; top: 60%; left: 50%; transform: translate(-50%, -50%); z-index: 2; display: flex; flex-direction: column; align-items: center; text-align: center; width: 700px;">
+            <div class="form-content">
+                <input type="text" id="username" placeholder="Username" required style="width: 300px; padding: 10px; margin: 10px 0; border: none; border-radius: 25px; background-color: rgba(246, 244, 241, 0.9); color: #513c2b; font-family: baskerville, serif; font-size: 16px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: all 0.3s ease; text-align: center;">
+                <input type="password" id="password" placeholder="Password" required style="width: 300px; padding: 10px; margin: 10px 0; border: none; border-radius: 25px; background-color: rgba(246, 244, 241, 0.9); color: #513c2b; font-family: baskerville, serif; font-size: 16px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: all 0.3s ease; text-align: center;">
+                <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                    <button type="submit" style="background-color: rgba(246, 244, 241, 0.9); color: #513c2b; border: none; padding: 7px 30px; width: 150px; font-size: 18px; font-family: baskerville, serif; border-radius: 25px; cursor: pointer; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.2); margin-top: 20px;" onmouseover="this.style.backgroundColor='#513c2b'; this.style.color='#f6f4f1'; this.style.transform='translateY(-5px) scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.3)'" onmouseout="this.style.backgroundColor='rgba(246, 244, 241, 0.9)'; this.style.color='#513c2b'; this.style.transform='none'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.2)'" onmousedown="this.style.transform='translateY(2px)'; this.style.boxShadow='0 2px 10px rgba(0,0,0,0.2)'" onmouseup="this.style.transform='translateY(-5px) scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.3)'">LOGIN</button>
+                    <button type="button" id="forgot" style="background: none; border: none; color: #f6f4f1; text-decoration: underline; font-family: baskerville, serif; font-size: 14px; margin-top: 10px; cursor: pointer; transition: all 0.3s ease;">Forgot Password?</button>
+                </div>
+                <div class="signup-text" style="margin-top: 15px; color: #f6f4f1;">
+                    Don't have an account? <a href="signUp.html" style="color: #f6f4f1; text-decoration: underline;">Sign Up</a>
+                </div>
+                <div id="error-message" style="color: #ff6b6b; margin-top: 10px; font-family: baskerville, serif; display: none;"></div>
+            </div>
+        </form>
+
+        <script>
+            document.getElementById('login-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const errorMessage = document.getElementById('error-message');
+                
+                try {
+                    const response = await fetch('/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({ username, password })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        errorMessage.textContent = data.message;
+                        errorMessage.style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    errorMessage.textContent = 'An error occurred during login. Please try again.';
+                    errorMessage.style.display = 'block';
+                }
+            });
+        </script>
+        <footer style="position: fixed !important; bottom: 0 !important; left: 0 !important; width: 100% !important; background-color: rgba(246, 244, 241, 0.5) !important; backdrop-filter: blur(8px) !important; -webkit-backdrop-filter: blur(8px) !important; text-align: center !important; height: 20px !important; padding: 5px 0 !important; z-index: 1000 !important; font-family: baskerville, serif !important; color: #5b5247 !important; font-size: 14px !important;"><p>Copyright &copy &ltN-sync&gt</p></footer>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const bg = document.querySelector('.bg');
+                
+                document.addEventListener('mousemove', function(e) {
+                    const x = (e.clientX / window.innerWidth) * 100;
+                    const y = (e.clientY / window.innerHeight) * 100;
+                    
+                    bg.style.setProperty('--mouse-x', x + '%');
+                    bg.style.setProperty('--mouse-y', y + '%');
+                });
+            });
+        </script>
+    </body>
+</html>

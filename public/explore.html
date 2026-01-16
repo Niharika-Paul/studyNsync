@@ -1,0 +1,303 @@
+<html>
+    <head>
+        <title>Resource | Explore</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="profilemenu.css">
+        <link rel="stylesheet" href="sidemenu.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <script src="logout.js"></script>
+        <style>
+            .submenu {
+                display: none; 
+            }
+            .resource-list {
+                max-height: 400px; /* Adjust the height as needed */
+                overflow-y: auto;  /* Enables vertical scrolling */
+                padding: 10px;     /* Optional: Adds space inside the container */
+            }
+
+            .navBar {
+                background: linear-gradient(135deg, rgba(127, 85, 57, 0.95) 0%, rgba(81, 60, 43, 0.95) 100%);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            }
+
+            .navBar nav ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                height: 80px;
+                padding: 0 2rem;
+            }
+
+            .logo {
+                color: #f5e6d3;
+                font-family: Baskerville, serif;
+                font-size: 2rem;
+                font-weight: 600;
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .menu-icon, .profile-icon {
+                color: #f5e6d3;
+                font-size: 1.5rem;
+                padding: 0.75rem;
+                cursor: pointer;
+                transition: color 0.3s ease;
+            }
+
+            .menu-icon:hover, .profile-icon:hover {
+                color: #f5e6d3;
+                opacity: 0.8;
+            }
+
+            .nav-right {
+                display: flex;
+                align-items: center;
+            }
+        </style>
+    </head>
+    <body>
+        <section class = "bg_books">
+            <div class="light-effect"></div>
+    
+            <header class="navBar">
+                <nav>
+                    <ul>    
+                        <div class="logo">—studyNsync—</div>
+                        <a href="javascript:void(0);" class="menu-icon" onclick="toggleSidebar()">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <div class="nav-right">
+                            <a href="javascript:void(0);" class="profile-icon" onclick="toggleProfileDropdown()">
+                                <i class="fa fa-user-circle"></i>
+                            </a>
+                            <!-- Profile Dropdown -->
+                            <div class="profile-dropdown" id="profileDropdown">
+                                <div class="dropdown-item">
+                                    <a href="profile.html" onclick="navigateTo('profile.html')">Profile</a>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a href="#" onclick="logout(); return false;">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </nav>
+            </header>
+        
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <div class="logo">StudyNSync</div>
+                    <div class="toggle-btn" onclick="toggleSidebar()">
+                        <i class="fa fa-chevron-left"></i>
+                    </div>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="dashboard.html" class="nav-link">
+                            <i class="fa fa-dashboard"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:void(0);" class="nav-link active" onclick="toggleSubmenu(this)">
+                            <i class="fa fa-book"></i>
+                            <span>Resources</span>
+                            <i class="fa fa-chevron-down"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="javascript:void(0);" class="active" onclick="navigateTo('explore.html')">Explore</a></li>
+                            <li><a href="javascript:void(0);" onclick="navigateTo('upload.html')">Upload</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:void(0);" class="nav-link" onclick="toggleSubmenu(this)">
+                            <i class="fa fa-users"></i>
+                            <span>Connect</span>
+                            <i class="fa fa-chevron-down"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="javascript:void(0);" onclick="navigateTo('findabuddy.html')">Find a Buddy</a></li>
+                            <li><a href="javascript:void(0);" onclick="navigateTo('findaproject.html')">Find a Project</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="main-content">
+                <div id = "root_ex">
+                    <!--rendered using react below-->
+                </div>
+
+                <footer>
+                <p>Copyright &copy; &ltN-sync&gt</p>
+                </footer>
+            </div>
+        </section>
+        <script type="text/babel">
+            function ExploreResources() {
+                const [resources, setResources] = React.useState([]);
+                const [filteredResources, setFilteredResources] = React.useState([]);
+                const [filters, setFilters] = React.useState({
+                    semester: "",
+                    subject: "",
+                    unit: "",
+                    fileType: ""
+                });
+
+                const subjectsBySemester = {
+                "3": ["Web Tech", "DDCO", "DSA","AFLL","MCSE"],
+                "4": ["MCA", "Comp Net", "DAA","OS","VSLA"],
+              };
+
+              const availableSubjects = filters.semester ? subjectsBySemester[filters.semester] : [];
+
+              React.useEffect(() => {
+                    fetch("/resources")
+                        .then((response) => response.json())
+                        .then((data) => {
+                            setResources(data);
+                            setFilteredResources(data);
+                        });
+                }, []);
+
+                const handleFilterChange = (e) => {
+                    const { name, value } = e.target;
+                    setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
+                };
+
+                const applyFilters = () => {
+                    setFilteredResources(
+                        resources.filter((resource) =>
+                            Object.entries(filters).every(([key, value]) =>
+                                value === "" || resource[key] === value
+                            )
+                        )
+                    );
+                };
+
+                const clearFilters = () => {
+                    setFilters({
+                        semester: "",
+                        subject: "",
+                        unit: "",
+                        fileType: ""
+                    });
+                    setFilteredResources(resources);
+                };
+    
+                return (
+                    <div className="explore-container">
+                        <h2>EXPLORE RESOURCES</h2>
+                        <div className="filter-section">
+                            <select name="semester" value={filters.semester} onChange={handleFilterChange}>
+                                <option value="">Select Semester</option>
+                                <option value="3">III</option>
+                                <option value="4">IV</option>
+                            </select>
+                            <select name="subject" value={filters.subject} onChange={handleFilterChange} disabled={!filters.semester}>
+                                <option value="">Select Subject</option>
+                                {availableSubjects.map((subject) => (
+                                <option key={subject} value={subject}>
+                                    {subject}
+                                </option>
+                            ))}
+                            </select>
+                            <select name="unit" value={filters.unit} onChange={handleFilterChange}>
+                                <option value="">Select Unit</option>
+                                <option value="I">I</option>
+                                <option value="II">II</option>
+                                <option value="III">III</option>
+                                <option value="IV">IV</option>
+                                <option value = "Lab">Lab</option>
+                            </select>
+                            <select name="fileType" value={filters.fileType} onChange={handleFilterChange}>
+                                <option value="">Select Type</option>
+                                <option value="Notes">Notes</option>
+                                <option value="Slides">Slides</option>
+                                <option value="Assignment">Assignment</option>
+                                <option value="Question Bank">Question Bank</option>
+                                <option value="Programs">Programs</option>
+                                <option value="Textbook">Textbook</option>
+                            </select>
+                            <button onClick={applyFilters}>Apply Filters</button>
+                            <button onClick={clearFilters}>Clear Filters</button>
+                        </div>
+                        <div className="resource-list">
+                            {filteredResources.length > 0 ? (
+                                filteredResources.map((resource) => (
+                                    <div key={resource._id} className="resource-item">
+                                        <h3>{resource.filename}</h3>
+                                        <p>Semester: {resource.semester}</p>
+                                        <p>Subject: {resource.subject}</p>
+                                        <p>Unit: {resource.unit}</p>
+                                        <p>Type: {resource.fileType}</p>
+                                        <a href={`/${resource.filePath}`} download>
+                                            Download
+                                        </a>
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No resources found</p>
+                            )}
+                        </div>
+                    </div>
+                );
+            }
+    
+            ReactDOM.createRoot(document.getElementById("root_ex")).render(<ExploreResources />);
+        </script>
+
+        <script>
+            function toggleSidebar() {
+                const sidebar = document.getElementById("sidebar");
+                const menuIcon = document.querySelector('.menu-icon');
+                sidebar.classList.toggle("visible");
+                menuIcon.classList.toggle("active");
+            }
+
+            function toggleSubmenu(element) {
+                const submenu = element.nextElementSibling;
+                if (submenu) {
+                    submenu.classList.toggle("visible");
+                    const icon = element.querySelector('.fa-chevron-down');
+                    if (icon) {
+                        icon.style.transform = submenu.classList.contains('visible') ? 'rotate(180deg)' : 'rotate(0)';
+                    }
+                }
+            }
+
+            function navigateTo(url) {
+                window.location.href = url;
+            }
+
+            // Toggle Profile Dropdown
+            function toggleProfileDropdown() {
+                var profileDropdown = document.getElementById("profileDropdown");
+                if (profileDropdown.style.display === "block") {
+                    // Hide other dropdowns first
+                    profileDropdown.style.display = "none"; // Hide the dropdown
+                } else {
+                    // Hide other dropdowns first
+                    profileDropdown.style.display = "block"; // Show the dropdown
+                }
+            }
+
+            // Close dropdown if clicked outside
+            window.onclick = function(event) {
+                var profileDropdown = document.getElementById("profileDropdown");
+                if (!event.target.matches('.profile-icon, .profile-icon *')) {
+                    profileDropdown.style.display = "none";
+                }
+            };
+        </script>
+    </body>
+</html>

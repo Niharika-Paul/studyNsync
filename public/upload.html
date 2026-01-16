@@ -1,0 +1,504 @@
+<html>
+    <head>
+        <title>Resources | Upload</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="profilemenu.css">
+        <link rel="stylesheet" href="sidemenu.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="logout.js"></script>
+
+        <style>
+            .submenu {
+                display: none; /* Hide submenus by default */
+            }
+
+            html, body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+
+            body {
+                min-height: 100vh;
+                background-color: #f6f4f1;
+            }
+
+            .container {
+                max-width: 800px;
+                margin: 2rem auto;
+                padding: 2rem;
+                background: linear-gradient(135deg, rgba(245, 230, 211, 0.95) 0%, rgba(127, 85, 57, 0.9) 100%);
+                border-radius: 15px;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+                backdrop-filter: blur(8px);
+            }
+
+            .container h2 {
+                color: #2d1810;
+                margin-bottom: 2rem;
+                font-family: Baskerville, serif;
+                font-size: 2.5rem;
+                text-shadow: 1px 1px 2px rgba(245, 230, 211, 0.4);
+                font-weight: 600;
+                text-align: center;
+                position: relative;
+                padding-bottom: 1rem;
+            }
+
+            .container h2::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 100px;
+                height: 2px;
+                background: linear-gradient(90deg, transparent, #2d1810, transparent);
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .form-group {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            label {
+                color: #2d1810;
+                font-size: 1.1rem;
+                font-weight: 600;
+                text-shadow: 1px 1px 1px rgba(245, 230, 211, 0.4);
+            }
+
+            select, input[type="file"] {
+                padding: 0.8rem;
+                border: 2px solid rgba(45, 24, 16, 0.3);
+                border-radius: 8px;
+                background-color: rgba(255, 255, 255, 0.9);
+                color: #2d1810;
+                font-size: 1rem;
+                transition: all 0.3s ease;
+                font-weight: 500;
+            }
+
+            select:focus, input[type="file"]:focus {
+                border-color: #2d1810;
+                outline: none;
+                box-shadow: 0 0 8px rgba(45, 24, 16, 0.2);
+            }
+
+            select:hover, input[type="file"]:hover {
+                border-color: #2d1810;
+            }
+
+            button {
+                background: linear-gradient(135deg, #7f5539 0%, #513c2b 100%);
+                color: #f5e6d3;
+                padding: 1rem 2rem;
+                border: none;
+                border-radius: 8px;
+                font-size: 1.1rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            button:hover {
+                background: linear-gradient(135deg, #513c2b 0%, #7f5539 100%);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+            }
+
+            .success-message, .error-message {
+                text-align: center;
+                padding: 2rem;
+                border-radius: 8px;
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(4px);
+            }
+
+            .success-message h2, .error-message h2 {
+                color: #2d1810;
+                text-shadow: 1px 1px 2px rgba(245, 230, 211, 0.4);
+            }
+
+            .bg_books {
+                background-image: url('books.jpg');
+                background-size: cover;
+                background-position: center;
+                min-height: 100vh;
+                padding: 2rem;
+                overflow-y: auto;
+            }
+
+            #root {
+                margin-top: 60px;
+                padding-bottom: 2rem;
+            }
+
+            /* Remove scrollbar styles but keep functionality */
+            .bg_books::-webkit-scrollbar {
+                width: 0;
+                background: transparent;
+            }
+
+            /* For Firefox */
+            .bg_books {
+                scrollbar-width: none;
+            }
+
+            /* For IE and Edge */
+            .bg_books {
+                -ms-overflow-style: none;
+            }
+
+            .navBar {
+                background: linear-gradient(135deg, rgba(127, 85, 57, 0.95) 0%, rgba(81, 60, 43, 0.95) 100%);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            }
+
+            .navBar nav ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                height: 80px;
+                padding: 0 2rem;
+            }
+
+            .logo {
+                color: #f5e6d3;
+                font-family: Baskerville, serif;
+                font-size: 2rem;
+                font-weight: 600;
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .menu-icon, .profile-icon {
+                color: #f5e6d3;
+                font-size: 1.5rem;
+                padding: 0.75rem;
+                cursor: pointer;
+                transition: color 0.3s ease;
+            }
+
+            .menu-icon:hover, .profile-icon:hover {
+                color: #f5e6d3;
+                opacity: 0.8;
+            }
+
+            .nav-right {
+                display: flex;
+                align-items: center;
+            }
+        </style>
+    </head>
+    <body>
+      <section class = "bg_books">
+        <header class="navBar">
+            <nav>
+                <ul>    
+                    <div class="logo">—studyNsync—</div>
+                    <a href="javascript:void(0);" class="menu-icon" onclick="toggleSidebar()">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                    <div class="nav-right">
+                        <a href="javascript:void(0);" class="profile-icon" onclick="toggleProfileDropdown()">
+                            <i class="fa fa-user-circle"></i>
+                        </a>
+                        <!-- Profile Dropdown -->
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <div class="dropdown-item">
+                                <a href="profile.html" onclick="navigateTo('profile.html')">Profile</a>
+                            </div>
+                            <div class="dropdown-item">
+                                <a href="#" onclick="logout(); return false;">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">StudyNSync</div>
+                <div class="toggle-btn" onclick="toggleSidebar()">
+                    <i class="fa fa-chevron-left"></i>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="javascript:void(0);" class="nav-link" onclick="navigateTo('dashboard.html')">
+                        <i class="fa fa-dashboard"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:void(0);" class="nav-link active" onclick="toggleSubmenu(this)">
+                        <i class="fa fa-book"></i>
+                        <span>Resources</span>
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="javascript:void(0);" onclick="navigateTo('explore.html')">Explore</a></li>
+                        <li><a href="javascript:void(0);" onclick="navigateTo('upload.html')" class="active">Upload</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:void(0);" class="nav-link" onclick="toggleSubmenu(this)">
+                        <i class="fa fa-users"></i>
+                        <span>Connect</span>
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="javascript:void(0);" onclick="navigateTo('findabuddy.html')">Find a Buddy</a></li>
+                        <li><a href="javascript:void(0);" onclick="navigateTo('findaproject.html')">Find a Project</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="main-content">
+          <div id = "root">
+            <!--rendered using react below-->
+          </div>
+
+          <footer>
+              <p>Copyright &copy; &ltN-sync&gt</p>
+          </footer>
+        </div>
+
+        <script type="text/babel">
+            function UploadForm() {
+              const [semester, setSemester] = React.useState("");
+              const [subject, setSubject] = React.useState("");
+              const [unit, setUnit] = React.useState("");
+              const [fileType, setFileType] = React.useState("");
+              const [file, setFile] = React.useState(null);
+              const [uploadStatus, setUploadStatus] = React.useState("");  // Stores upload status: "success" or "error"
+ 
+              const fileTypes = ["Notes", "Slides", "Assignment", "Question Bank", "Programs", "Textbook"];
+
+              const subjectsBySemester = {
+                "3": ["Web Tech", "DDCO", "DSA", "AFLL", "MCSE"],
+                "4": ["MCA", "Comp Net", "DAA", "OS", "VSLA"],
+              };
+
+              const units = ["I", "II", "III", "IV", "Lab"];
+
+              const handleSubmit = async (e) => {
+                e.preventDefault();
+                const formData = new FormData();
+                formData.append('semester', semester);
+                formData.append('subject', subject);
+                formData.append('unit', unit);
+                formData.append('fileType', fileType);
+                formData.append('file', file);
+
+                try {
+                  const response = await axios.post('/upload', formData, {
+                    headers: {
+                      'Content-Type': 'multipart/form-data',
+                    }
+                  });
+
+                  if (response.status === 200) {
+                    setUploadStatus("success"); 
+                  } else {
+                    setUploadStatus("error");
+                  }
+                } catch (error) {
+                  console.error("Error in uploading the file:", error);
+                  setUploadStatus("error");
+                }
+              };
+
+              const resetForm = () => {
+                setSemester("");
+                setSubject("");
+                setUnit("");
+                setFileType("");
+                setFile(null);
+                setUploadStatus(""); 
+              };
+
+              if (uploadStatus === "success") {
+                return (
+                  <div className="container">
+                    <div className="success-message">
+                      <h2>YOUR FILE HAS BEEN UPLOADED!</h2>
+                      <button onClick={resetForm}>Upload More Resources</button>
+                    </div>
+                  </div>
+                );
+              }
+
+              if (uploadStatus === "error") {
+                return (
+                  <div className="container">
+                    <div className="error-message">
+                      <h2>Uh-Oh! Error encountered while uploading</h2>
+                      <button onClick={resetForm}>Try Again</button>
+                    </div>
+                  </div>
+                );
+              }
+
+              return (
+                <div className="container">
+                  <h2>UPLOAD RESOURCE</h2>
+                  <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                      <label>Select Semester:</label>
+                      <select 
+                        value={semester} 
+                        onChange={(e) => {
+                          setSemester(e.target.value);
+                          setSubject("");
+                        }}
+                        required
+                      >
+                        <option value="">Choose Semester</option>
+                        {Object.keys(subjectsBySemester).map((sem) => (
+                          <option key={sem} value={sem}>Semester {sem}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="form-group">
+                      <label>Select Subject:</label>
+                      <select 
+                        value={subject} 
+                        onChange={(e) => setSubject(e.target.value)}
+                        disabled={!semester}
+                        required
+                      >
+                        <option value="">Choose Subject</option>
+                        {semester && subjectsBySemester[semester].map((sub) => (
+                          <option key={sub} value={sub}>{sub}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="form-group">
+                      <label>Select Unit:</label>
+                      <select 
+                        value={unit} 
+                        onChange={(e) => setUnit(e.target.value)}
+                        required
+                      >
+                        <option value="">Choose Unit</option>
+                        {units.map((u) => (
+                          <option key={u} value={u}>Unit {u}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="form-group">
+                      <label>Select File Type:</label>
+                      <select 
+                        value={fileType} 
+                        onChange={(e) => setFileType(e.target.value)}
+                        required
+                      >
+                        <option value="">Choose File Type</option>
+                        {fileTypes.map((type) => (
+                          <option key={type} value={type}>{type}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="form-group">
+                      <label>Upload File:</label>
+                      <input 
+                        type="file" 
+                        onChange={(e) => setFile(e.target.files[0])}
+                        required 
+                      />
+                    </div>
+
+                    <button type="submit">Upload</button>
+                  </form>
+                </div>
+              );
+            }
+
+            ReactDOM.createRoot(document.getElementById("root")).render(<UploadForm />);
+
+          </script>
+    
+        <script>
+            function toggleSideMenu() {
+                var sideMenu = document.getElementById("sideMenu");
+                sideMenu.style.display = (sideMenu.style.display === "block") ? "none" : "block";
+            }
+
+            function toggleSubMenu(element) {
+                const submenu = element.nextElementSibling;
+                if (submenu) {
+                    submenu.classList.toggle("visible");
+                    const icon = element.querySelector('.fa-chevron-down');
+                    if (icon) {
+                        icon.style.transform = submenu.classList.contains('visible') ? 'rotate(180deg)' : 'rotate(0)';
+                    }
+                }
+            }
+
+            function navigateTo(url) {
+                window.location.href = url;
+            }
+
+            // Toggle Profile Dropdown
+            function toggleProfileDropdown() {
+                var profileDropdown = document.getElementById("profileDropdown");
+                if (profileDropdown.style.display === "block") {
+                    profileDropdown.style.display = "none"; // Hide the dropdown
+                } else {
+                    profileDropdown.style.display = "block"; // Show the dropdown
+                }
+            }
+
+            // Close dropdown if clicked outside
+            window.onclick = function(event) {
+                var profileDropdown = document.getElementById("profileDropdown");
+                if (!event.target.matches('.profile-icon, .profile-icon *')) {
+                    profileDropdown.style.display = "none";
+                }
+            };
+
+            function toggleSidebar() {
+                const sidebar = document.getElementById("sidebar");
+                const menuIcon = document.querySelector('.menu-icon');
+                sidebar.classList.toggle("visible");
+                menuIcon.classList.toggle("active");
+            }
+
+            function toggleSubmenu(element) {
+                const submenu = element.nextElementSibling;
+                if (submenu) {
+                    submenu.classList.toggle("visible");
+                    const icon = element.querySelector('.fa-chevron-down');
+                    if (icon) {
+                        icon.style.transform = submenu.classList.contains('visible') ? 'rotate(180deg)' : 'rotate(0)';
+                    }
+                }
+            }
+        </script> 
+    </body>
+</html>

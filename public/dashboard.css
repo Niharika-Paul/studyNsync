@@ -1,0 +1,203 @@
+html {
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    font-family: baskerville, serif;
+    background: linear-gradient(
+        45deg,
+        #ddb8ba,
+        #7f5539,
+        #513c2b,
+        #7f5539,
+        #ddb8ba
+    );
+    background-size: 400% 400%;
+    animation: gradientFlow 8s ease infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.light-effect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    background: radial-gradient(
+        circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.1) 10%,
+        transparent 30%
+    );
+}
+
+.navBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.nav-left, .nav-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.nav-right {
+    justify-content: flex-end;
+}
+
+.logo {
+    font-family: 'Baskerville', serif;
+    font-size: 24px;
+    text-decoration: none;
+    color: #e6ccb2;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    transition: color 0.3s ease;
+}
+
+.logo:hover {
+    color: #e6d5d5;
+}
+
+.menu-icon i, .profile-icon i {
+    font-size: 24px;
+    color: #e6ccb2;
+    transition: color 0.3s ease;
+}
+
+.menu-icon:hover i, .profile-icon:hover i {
+    color: #e6d5d5;
+}
+
+.menu-icon, .profile-icon {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.dashboard-container {
+    margin-left: 0px;  
+    margin-top: 100px;   
+    height: calc(100vh - 70px);
+    padding: 20px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dashboard-title {
+    font-family: baskerville, serif;
+    font-style: italic;
+    font-size: 2.5em;
+    color: #e6ccb2;
+    margin-bottom: 40px;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.button-container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    width: 100%;
+}
+
+.button-link {
+    text-decoration: none;
+}
+
+.dashboard-button {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    object-fit: cover;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    filter: brightness(0.95);
+}
+
+.dashboard-button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    filter: brightness(1.1) contrast(1.1);
+}
+
+#loader {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    z-index: 20;
+    overflow: visible;
+    background: #000000 url('loading.gif') no-repeat center center;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+    }
+
+.main-content {
+    display: none;
+    height: 100%;
+    }
+
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    text-align: center;
+    padding: 5px 0;
+    z-index: 100;
+}
+
+footer p {
+    margin: 0;
+    color: #513c2b;
+    font-size: 14px;
+}

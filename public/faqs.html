@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" class="faqs-page">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQs</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        .page-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-wrap {
+            flex: 1;
+            background-image: url('bg_full.png');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .content-wrap::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #fff;
+            font-family: baskerville, serif;
+            font-weight: lighter;
+            text-align: center;
+            padding-top: 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .faq-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 30px;
+            width: 80%;
+            max-width: 800px;
+            margin: 20px auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .faq-container h2 {
+            font-size: 20px;
+            font-weight: normal;
+            color: #333;
+            margin-bottom: 10px;
+            font-family: baskerville, serif;
+        }
+
+        .faq-container p {
+            font-size: 16px;
+            margin: 0 0 20px 20px;
+            color: #5b5247;
+            font-family: baskerville, serif;
+        }
+
+        .faq-container h2::before {
+            content: "↳ ";
+            color: #5b5247;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header class="navBar">
+            <nav>
+                <ul>
+                    <li><a href="landing.html">HOME</a></li>
+                    <li><a href="aboutUs.html">ABOUT</a></li>
+                    <li class="logo">—studyNsync—</li>
+                    <li><a href="contact.html">CONTACT</a></li>
+                    <li><a href="faqs.html">FAQS</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main class="content-wrap">
+            <h1>FAQs</h1>
+            <div class="faq-container">
+                <h2>What types of projects can I find on studyNsync?</h2>
+                <p>You can find a wide range of projects, including hackathons, class assignments, and personal initiatives, across various fields and interests. Coming soon, stay tuned :)</p>
+                
+                <h2>How is my data protected on studyNsync?</h2>
+                <p>We take your privacy seriously and implement strong security measures to protect your personal information. For more details, please refer to our Privacy Policy.</p>
+                
+                <h2>I'm a first-year student. Where do I access files?</h2>
+                <p>Coming soon, stay tuned :)</p>
+            </div>
+        </main>
+        <footer>
+            <p>&copy;

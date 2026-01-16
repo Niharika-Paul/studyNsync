@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="sidemenu.css">
+    <link rel="stylesheet" href="profilemenu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="logout.js"></script>
+</head>
+<body>
+    <div class="light-effect"></div>
+    
+    <header class="navBar">
+        <nav>
+            <div class="nav-left">
+                <a href="javascript:void(0);" class="menu-icon" onclick="toggleSidebar()">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+            <div class="logo">—studyNsync—</div>
+            <div class="nav-right">
+                <a href="javascript:void(0);" class="profile-icon" onclick="toggleProfileDropdown()">
+                    <i class="fa fa-user-circle"></i>
+                </a>
+                <!-- Profile Dropdown -->
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="dropdown-item">
+                        <a href="profile.html" onclick="navigateTo('profile.html')">Profile</a>
+                    </div>
+                    <div class="dropdown-item">
+                        <a href="#" onclick="logout(); return false;">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">StudyNSync</div>
+            <div class="toggle-btn" onclick="toggleSidebar()">
+                <i class="fa fa-chevron-left"></i>
+            </div>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fa fa-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="resources.html" class="nav-link" onclick="toggleSubmenu(this)">
+                    <i class="fa fa-book"></i>
+                    <span>Resources</span>
+                    <i class="fa fa-chevron-down"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="explore.html">Explore</a></li>
+                    <li><a href="upload.html">Upload</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="connect.html" class="nav-link" onclick="toggleSubmenu(this)">
+                    <i class="fa fa-users"></i>
+                    <span>Connect</span>
+                    <i class="fa fa-chevron-down"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="findabuddy.html">Find a Buddy</a></li>
+                    <li><a href="findaProject.html">Find a Project</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div id = "loader">
+        <audio autoplay loop>
+            <source src = "bgm.mp3" type="audio/ogg">
+        </audio>
+    </div>
+
+    <div class="main-content">
+        <main class="dashboard-container">
+            <h1 class="dashboard-title">Dashboard</h1>
+            <div class="button-container">
+                <a href="resources.html" class="button-link">
+                    <img src="res_img.png" alt="Resources" class="dashboard-button">
+                </a>
+                <a href="connect.html" class="button-link">
+                    <img src="con_img.png" alt="Connect" class="dashboard-button">
+                </a>
+            </div>
+        </main>
+
+        <footer>
+            <p>Copyright &copy; &ltN-sync&gt</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("visible");
+        }
+
+        function toggleSubmenu(element) {
+            var submenu = element.nextElementSibling;
+            submenu.classList.toggle("visible");
+        }
+
+        function navigateTo(url) {
+            window.location.href = url;
+        }
+
+        // Toggle Profile Dropdown
+        function toggleProfileDropdown() {
+            var profileDropdown = document.getElementById("profileDropdown");
+            if (profileDropdown.style.display === "block") {
+                profileDropdown.style.display = "none";
+            } else {
+                profileDropdown.style.display = "block";
+            }
+        }
+
+        // Close dropdown if clicked outside
+        window.onclick = function(event) {
+            var profileDropdown = document.getElementById("profileDropdown");
+            if (!event.target.matches('.profile-icon, .profile-icon *')) {
+                profileDropdown.style.display = "none";
+            }
+        };
+
+        document.addEventListener('mousemove', (e) => {
+            const lightEffect = document.querySelector('.light-effect');
+            if (lightEffect) {
+                lightEffect.style.setProperty('--mouse-x', `${e.clientX}px`);
+                lightEffect.style.setProperty('--mouse-y', `${e.clientY}px`);
+            }
+        });
+
+        function loadNow(opacity) {
+                if (opacity <= 0) { 
+                    displayContent();
+                } else {
+                    loader.style.opacity = opacity;
+                    setTimeout(function () {
+                        loadNow(opacity - 0.05);
+                    }, 50);
+                }
+            }
+
+            function displayContent() {
+                loader.style.display = 'none'; // Hide the loader
+                document.querySelector('.main-content').style.display = 'block'; // Show the content
+                const audio = document.querySelector('#loader audio');
+                if(audio){
+                    audio.pause(); // Pause the audio
+                    audio.currentTime = 0; // Reset the audio
+                }
+                const loaderElement = document.getElementById('loader');
+                if(loaderElement) {
+                    loaderElement.style.backgroundImage = 'none';
+                    loaderElement.style.backgroundImage = 'url("loading.gif")'; //resetting the gif
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                loader = document.getElementById('loader');
+                setTimeout(function () {
+                    loadNow(1);
+                }, 5000);
+            });
+    </script>
+    <script>
+        var preloader = document.getElementById('loader');
+        function preLoaderHandler(){
+        preloader.style.display = 'none';
+    }
+    </script>
+</body>
+</html>

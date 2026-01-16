@@ -1,0 +1,141 @@
+body {
+    font-family: 'Baskerville', serif;
+    background-color: #f6f4f1;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    color: #090202;
+    text-align: center;
+    margin: 2rem 0;
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+}
+
+.edit-profile-container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#editProfileForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    color: #31281c;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.form-group input {
+    padding: 12px;
+    border: 2px solid #d7cec3;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #7f5539;
+    box-shadow: 0 0 5px rgba(127, 85, 57, 0.2);
+}
+
+.button-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.update-btn {
+    padding: 12px 30px;
+    background-color: #090202;
+    color: #f6f4f1;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.update-btn:hover {
+    background-color: #846a56;
+}
+
+.update-btn:active {
+    transform: translateY(2px);
+}
+
+.cancel-btn {
+    padding: 12px 30px;
+    background-color: #c41e3a;
+    color: #f6f4f1;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background-color: #8b0000;
+}
+
+.cancel-btn:active {
+    transform: translateY(2px);
+}
+
+/* Error message styling */
+.error-message {
+    color: #c41e3a;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+/* Success message styling */
+.success-message {
+    color: #2e7d32;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .edit-profile-container {
+        width: 95%;
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .form-group label {
+        font-size: 1rem;
+    }
+
+    .update-btn,
+    .cancel-btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Find a Buddy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="connect.css">
+    <link rel="stylesheet" href="findabuddy.css">
+    <link rel="stylesheet" href="sidemenu.css">
+    <link rel="stylesheet" href="profilemenu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="logout.js"></script>
+    <style>
+        /* Form-specific styles */
+        /* Custom scrollbar */
+        .form-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .form-container::-webkit-scrollbar-track {
+            background: rgba(230, 204, 178, 0.1);
+            border-radius: 10px;
+        }
+
+        .form-container::-webkit-scrollbar-thumb {
+            background: rgba(127, 85, 57, 0.5);
+            border-radius: 10px;
+        }
+
+        .form-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(127, 85, 57, 0.7);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .form-group label {
+            width: 180px;
+            text-align: center;
+            margin: 0;
+            color: #31281c;
+            font-family: baskerville, serif;
+            flex-shrink: 0;
+            font-weight: bolder;
+            background-color: rgba(215, 206, 195, 0.95);
+            padding: 8px 15px;
+            border-radius: 100px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            margin-right: 15px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 8px;
+            width: 250px;
+            border: 1px solid #987d67;
+            border-radius: 20px;
+            background-color: rgba(248, 241, 234, 0.5);
+            color: #352424;
+            font-family: baskerville, serif;
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        .date-range {
+            display: flex;
+            gap: 10px;
+            width: 250px;
+        }
+
+        .date-range input {
+            width: 100px;
+        }
+
+        .form-title, .form-subtitle {
+            text-align: center;
+            color: #31281c;
+            font-family: baskerville, serif;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-title {
+            font-size: 2.5em;
+            margin-top: 0;
+        }
+
+        .form-subtitle {
+            font-size: 1.5em;
+            margin-top: 0;
+            font-style: italic;
+        }
+
+        main.main-content {
+            padding: 80px 0 40px;
+            min-height: 100vh;
+            box-sizing: border-box;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            background: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(
+                45deg,
+                #ddb8ba,
+                #7f5539,
+                #513c2b,
+                #7f5539,
+                #ddb8ba
+            );
+            background-size: 400% 400%;
+            animation: gradientFlow 8s ease infinite;
+            min-height: 100vh;
+            font-family: baskerville, serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .submit-btn {
+            background-color: #7f5539;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: baskerville, serif;
+            margin-top: 15px;
+            width: 200px;
+            font-size: 16px;
+        }
+
+        .submit-btn:hover {
+            background-color: #9c6644;
+        }
+
+        .clear-btn {
+            background-color: #513c2b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: baskerville, serif;
+            margin-top: 15px;
+            width: 150px;
+            font-size: 16px;
+        }
+
+        .clear-btn:hover {
+            background-color: #6b4f3a;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(91, 82, 71, 0.8);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+            text-align: center;
+            height: 25px;
+            padding: 5px 0;
+            z-index: 1000;
+            font-family: baskerville, serif;
+            font-size: 14px;
+        }
+
+        footer p {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Side menu initial state */
+        .side-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .side-menu.visible {
+            transform: translateX(0);
+        }
+        
+        .form-group {
+            justify-content: center;
+        }
+
+        /* Profile Dropdown */
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .profile-dropdown .dropdown-item {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .profile-dropdown .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .profile-dropdown a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .profile-dropdown a:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="light-effect"></div>
+    
+    <header class="navBar">
+        <nav>
+            <div class="nav-left">
+                <a href="javascript:void(0);" class="menu-icon" onclick="toggleSidebar()">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+            <div class="logo">—studyNsync—</div>
+            <div class="nav-right">
+                <a href="javascript:void(0);" class="profile-icon" onclick="toggleProfileDropdown()">
+                    <i class="fa fa-user-circle"></i>
+                </a>
+                <!-- Profile Dropdown -->
+                <div class="profile-dropdown" id="profileDropdown">
+                    <div class="dropdown-item">
+                        <a href="profile.html" onclick="navigateTo('profile.html')">Profile</a>
+                    </div>
+                    <div class="dropdown-item">
+                        <a href="#" onclick="logout(); return false;">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">StudyNSync</div>
+            <div class="toggle-btn" onclick="toggleSidebar()">
+                <i class="fa fa-chevron-left"></i>
+            </div>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fa fa-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="resources.html" class="nav-link" onclick="toggleSubmenu(this)">
+                    <i class="fa fa-book"></i>
+                    <span>Resources</span>
+                    <i class="fa fa-chevron-down"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="explore.html">Explore</a></li>
+                    <li><a href="upload.html">Upload</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="connect.html" class="nav-link active" onclick="toggleSubmenu(this)">
+                    <i class="fa fa-users"></i>
+                    <span>Connect</span>
+                    <i class="fa fa-chevron-down"></i>
+                </a>
+                <ul class="submenu visible">
+                    <li><a href="findabuddy.html" class="active">Find a Buddy</a></li>
+                    <li><a href="findaProject.html">Find a Project</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="form-container">
+            <h2 class="form-title">Create a Project</h2>
+            <h4 class="form-subtitle"> to find teammates </h4>
+            <form id="buddyForm">
+                <div class="form-group">
+                    <label for="projectTitle">Project Title</label>
+                    <input type="text" id="projectTitle" name="projectTitle" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="projectType">Project Type</label>
+                    <select id="projectType" name="projectType" required>
+                        <option value="">Select type</option>
+                        <option value="hackathon">Hackathon</option>
+                        <option value="project">Project</option>
+                        <option value="workshop">Workshop</option>
+                        <option value="ideathon">Ideathon</option>
+                    </select>
+                </div>
+    
+                <div class="form-group">
+                    <label for="projectDescription">Project Description</label>
+                    <textarea id="projectDescription" name="projectDescription" required></textarea>
+                </div>
+    
+                <div class="form-group">
+                    <label for="skillsRequired">Skills Required</label>
+                    <textarea id="skillsRequired" name="skillsRequired" required></textarea>
+                </div>
+    
+                <div class="form-group">
+                    <label for="dateFrom">Date & Time</label>
+                    <div class="date-range">
+                        <input type="datetime-local" id="dateFrom" name="dateFrom" required>
+                        <input type="datetime-local" id="dateTo" name="dateTo" required>
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <label for="peopleRequired">No. of People Required</label>
+                    <input type="number" id="peopleRequired" name="peopleRequired" min="1" max="10" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="contactDetails">Contact Details</label>
+                    <input type="tel" id="contactDetails" name="contactDetails" 
+                           pattern="[0-9]{10}" 
+                           placeholder="Enter 10-digit phone number"
+                           required>
+                </div>
+    
+                <div class="form-group">
+                    <div class="button-container">
+                        <button type="reset" class="clear-btn">Clear Form</button>
+                        <button type="submit" class="submit-btn">Create Project</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>Copyright &copy; &ltN-sync&gt</p>
+    </footer>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            const menuIcon = document.querySelector('.menu-icon');
+            sidebar.classList.toggle("visible");
+            menuIcon.classList.toggle("active");
+        }
+
+        function toggleSubmenu(element) {
+            const submenu = element.nextElementSibling;
+            submenu.classList.toggle("visible");
+            const icon = element.querySelector('.fa-chevron-down');
+            if (icon) {
+                icon.style.transform = submenu.classList.contains('visible') ? 'rotate(180deg)' : 'rotate(0)';
+            }
+        }
+
+        function navigateTo(url) {
+            window.location.href = url;
+        }
+
+        // Toggle Profile Dropdown
+        function toggleProfileDropdown() {
+            var profileDropdown = document.getElementById("profileDropdown");
+            if (profileDropdown.style.display === "block") {
+                profileDropdown.style.display = "none";
+            } else {
+                profileDropdown.style.display = "block";
+            }
+        }
+
+        // Close dropdown if clicked outside
+        window.onclick = function(event) {
+            var profileDropdown = document.getElementById("profileDropdown");
+            if (!event.target.matches('.profile-icon, .profile-icon *')) {
+                profileDropdown.style.display = "none";
+            }
+        };
+
+        document.addEventListener('mousemove', (e) => {
+            const lightEffect = document.querySelector('.light-effect');
+            if (lightEffect) {
+                lightEffect.style.setProperty('--mouse-x', `${e.clientX}px`);
+                lightEffect.style.setProperty('--mouse-y', `${e.clientY}px`);
+            }
+        });
+
+        // Check authentication status when page loads
+        async function checkAuth() {
+            try {
+                const response = await fetch('/check-auth', {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                if (!data.isLoggedIn) {
+                    alert('Please log in to create a project');
+                    window.location.href = '/login';
+                }
+            } catch (error) {
+                console.error('Auth check error:', error);
+            }
+        }
+
+        // Check auth when page loads
+        document.addEventListener('DOMContentLoaded', checkAuth);
+
+        document.getElementById('buddyForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            try {
+                const formData = {
+                    projectTitle: document.getElementById('projectTitle').value,
+                    projectType: document.getElementById('projectType').value,
+                    projectDescription: document.getElementById('projectDescription').value,
+                    skillsRequired: document.getElementById('skillsRequired').value,
+                    dateFrom: document.getElementById('dateFrom').value,
+                    dateTo: document.getElementById('dateTo').value,
+                    peopleRequired: parseInt(document.getElementById('peopleRequired').value),
+                    contactDetails: document.getElementById('contactDetails').value
+                };
+
+                const response = await fetch('/api/projects', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    alert('Project created successfully!');
+                    window.location.href = '/findaProject';
+                } else {
+                    const data = await response.json();
+                    if (data.error === 'You must be logged in to create a project') {
+                        alert('Your session has expired. Please log in again.');
+                        window.location.href = '/login';
+                    } else {
+                        alert(data.error || 'Failed to create project');
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to create project. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

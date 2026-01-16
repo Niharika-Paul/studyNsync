@@ -1,0 +1,415 @@
+<html>
+    <head>
+        <title>Find A Project</title>
+        <link rel="stylesheet" href="styles2.css">
+        <link rel="stylesheet" href="profilemenu.css">
+        <link rel="stylesheet" href="sidemenu.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            html, body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow-x: hidden;
+            }
+
+            body {
+                overflow-y: scroll;
+                min-height: 100vh;
+                background-color: #f6f4f1;
+            }
+
+            /* Custom Scrollbar Styles */
+            ::-webkit-scrollbar {
+                width: 12px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background: rgba(246, 244, 241, 0.1);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: rgba(81, 60, 43, 0.3);
+                border-radius: 6px;
+                border: 3px solid rgba(246, 244, 241, 0.1);
+                transition: all 0.3s ease;
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: rgba(81, 60, 43, 0.5);
+            }
+
+            .submenu {
+                display: none; /* Hide submenus by default */
+            }
+            .project-card {
+                background: linear-gradient(135deg, #927d5d 0%, #4b392b 100%);
+                color: #f6f4f1;
+                border-radius: 3vh;
+                padding: 3vh;
+                font-family: Baskerville, serif;
+                width: 25vw;
+                height: 22vh;
+                margin: 1vh;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                overflow: hidden;
+                cursor: pointer;
+            }
+            .project-card:hover {
+                box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+                height: 55vh;
+                background: linear-gradient(135deg, #a18c6c 0%, #5c4a3c 100%);
+            }
+            .project-card h2 {
+                margin: 0 0 2vh 0;
+                font-size: 3.5vh;
+                text-align: center;
+                color: #f6f4f1;
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+                width: 100%;
+            }
+            .project-card .initial-content {
+                width: 100%;
+                transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .project-card .initial-content p:first-of-type {
+                font-size: 2.8vh;
+                margin: 2vh 0;
+                width: 100%;
+            }
+            .project-card p {
+                margin: 1.5vh 0;
+                text-align: center;
+                font-size: 2.2vh;
+                line-height: 1.4;
+                width: 100%;
+            }
+            .project-card .hover-content {
+                opacity: 0;
+                max-height: 0;
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                overflow: hidden;
+                width: 100%;
+            }
+            .project-card:hover .hover-content {
+                opacity: 1;
+                max-height: 500px;
+                margin-top: 2vh;
+            }
+            .project-card .hover-content p {
+                width: 100%;
+                padding: 0.5vh 0;
+            }
+            .project-card .hover-content p:nth-child(2) {
+                margin: 2vh 0;
+                font-style: italic;
+                line-height: 1.6;
+                font-size: 2.1vh;
+                text-align: justify;
+                padding: 1vh 2vh;
+                width: calc(100% - 4vh);
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .project-card strong {
+                color: #f6f4f1;
+                font-size: 2.3vh;
+            }
+            #projectsContainer {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 2vh;
+                padding: 2vh;
+                margin: 0 auto;
+                max-width: 90vw;
+                padding-bottom: 10vh;
+            }
+            .search-sort-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 3vw;
+                padding: 2vh;
+                margin: 15vh auto 2vh auto;
+                max-width: 90vw;
+            }
+            .search-bar {
+                display: flex;
+                align-items: center;
+                background-color: #f6f4f1;
+                border: 0.3vh solid #8B4513;
+                border-radius: 2vh;
+                width: 40vw;
+                padding: 0.5vh;
+                font-family: Baskerville, serif;
+                box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            }
+            h1 {
+                text-align: center;
+                margin: 15vh 0 4vh 0;
+                font-family: Baskerville, serif;
+                font-size: 4vh;
+                color: #4b392b;
+            }
+        </style>
+    </head>
+    <body>
+        <header class="navBar">
+            <nav>
+                <div class="nav-container">
+                    <div class="nav-left">
+                        <a href="javascript:void(0);" class="menu-icon" onclick="toggleSidebar()">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </div>
+                    <div class="logo">—studyNsync—</div>
+                    <div class="nav-right">
+                        <a href="javascript:void(0);" class="profile-icon" onclick="toggleProfileDropdown()">
+                            <i class="fa fa-user-circle"></i>
+                        </a>
+                        <!-- Profile Dropdown -->
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <div class="dropdown-item">
+                                <a href="profile.html" onclick="navigateTo('profile.html')">Profile</a>
+                            </div>
+                            <div class="dropdown-item">
+                                <a href="javascript:void(0);" onclick="handleLogout()">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <h1 style="margin-top: 3vh;">Find a Project</h1>
+
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">StudyNSync</div>
+                <div class="toggle-btn" onclick="toggleSidebar()">
+                    <i class="fa fa-chevron-left"></i>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="javascript:void(0);" class="nav-link" onclick="navigateTo('dashboard.html')">
+                        <i class="fa fa-dashboard"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:void(0);" class="nav-link" onclick="toggleSubmenu(this)">
+                        <i class="fa fa-book"></i>
+                        <span>Resources</span>
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="javascript:void(0);" onclick="navigateTo('explore.html')">Explore</a></li>
+                        <li><a href="javascript:void(0);" onclick="navigateTo('upload.html')">Upload</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:void(0);" class="nav-link active" onclick="toggleSubmenu(this)">
+                        <i class="fa fa-users"></i>
+                        <span>Connect</span>
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu visible">
+                        <li><a href="javascript:void(0);" onclick="navigateTo('findabuddy.html')">Find a Buddy</a></li>
+                        <li><a href="javascript:void(0);" onclick="navigateTo('findaProject.html')" class="active">Find a Project</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <div class="search-sort-container">
+                <!-- Search Bar Container -->
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search..." 
+                        style="width: 100%; padding: 1vh 1vw; font-size: 2vh; border: none; outline: none; background-color: transparent; color: #5b5247;">
+                    <button style="background: none; border: none; cursor: pointer; font-size: 2vh; color: #5b5247; margin-right: 1vh;">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+                
+                <!-- Sort Dropdown -->
+                <div>
+                    <select id="sortSelect" style="font-size: 2.5vh; padding: 1vh; border-radius: 1vh; border: 0.3vh solid #8B4513; background-color: #f6f4f1; color: #5b5247; font-family: Baskerville, serif;">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="peopleAsc">People Required (Low to High)</option>
+                        <option value="peopleDesc">People Required (High to Low)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Project Cards Container -->
+            <div id="projectsContainer">
+                <!-- Projects will be dynamically loaded here -->
+            </div>
+
+            <script>
+                // Check session status when page loads
+                async function checkSession() {
+                    try {
+                        const response = await fetch('/api/check-session', {
+                            credentials: 'include'
+                        });
+                        const data = await response.json();
+                        
+                        if (!data.loggedIn) {
+                            window.location.href = 'login.html';
+                            return false;
+                        }
+                        return true;
+                    } catch (error) {
+                        console.error('Session check error:', error);
+                        return false;
+                    }
+                }
+
+                // Function to fetch and display projects
+                async function fetchAndDisplayProjects() {
+                    try {
+                        const response = await fetch('/api/projects', {
+                            credentials: 'include'
+                        });
+                        const projects = await response.json();
+                        displayProjects(projects);
+                    } catch (error) {
+                        console.error('Error fetching projects:', error);
+                    }
+                }
+            
+                // Function to display projects
+                function displayProjects(projects) {
+                    const container = document.getElementById('projectsContainer');
+                    container.innerHTML = '';
+            
+                    projects.forEach(project => {
+                        const card = document.createElement('div');
+                        card.className = 'project-card';
+                        card.dataset.date = project.createdAt;
+                        card.dataset.people = project.peopleRequired;
+                        
+                        card.innerHTML = `
+                            <div class="initial-content">
+                                <h2>${project.projectTitle}</h2>
+                                <p><strong>Type:</strong> ${project.projectType}</p>
+                                <p><strong>Duration:</strong><br>
+                                   From: ${new Date(project.dateFrom).toLocaleString()}<br>
+                                   To: ${new Date(project.dateTo).toLocaleString()}</p>
+                            </div>
+                            <div class="hover-content">
+                                <p><strong>Skills Required:</strong> ${project.skillsRequired}</p>
+                                <p><strong>Description:</strong><br>${project.projectDescription}</p>
+                                <p><strong>People Required:</strong> ${project.peopleRequired}</p>
+                                <p><strong>Contact:</strong> ${project.contactDetails}</p>
+                            </div>
+                        `;
+                        
+                        container.appendChild(card);
+                    });
+                }
+            
+                // Function to handle search
+                document.getElementById('searchInput').addEventListener('input', function(e) {
+                    const searchTerm = e.target.value.toLowerCase();
+                    const cards = document.querySelectorAll('.project-card');
+                    
+                    cards.forEach(card => {
+                        const text = card.textContent.toLowerCase();
+                        card.style.display = text.includes(searchTerm) ? '' : 'none';
+                    });
+                });
+            
+                // Function to handle sorting
+                document.getElementById('sortSelect').addEventListener('change', function(e) {
+                    const sortBy = e.target.value;
+                    const container = document.getElementById('projectsContainer');
+                    const cards = Array.from(container.children);
+            
+                    cards.sort((a, b) => {
+                        switch(sortBy) {
+                            case 'newest':
+                                return new Date(b.dataset.date) - new Date(a.dataset.date);
+                            case 'oldest':
+                                return new Date(a.dataset.date) - new Date(b.dataset.date);
+                            case 'peopleAsc':
+                                return parseInt(a.dataset.people) - parseInt(b.dataset.people);
+                            case 'peopleDesc':
+                                return parseInt(b.dataset.people) - parseInt(a.dataset.people);
+                            default:
+                                return 0;
+                        }
+                    });
+            
+                    container.innerHTML = '';
+                    cards.forEach(card => container.appendChild(card));
+                });
+            
+                // Function to handle logout
+                async function handleLogout() {
+                    try {
+                        const response = await fetch('/logout', {
+                            method: 'POST',
+                            credentials: 'include'
+                        });
+
+                        if (response.ok) {
+                            // Clear any client-side data/tokens if needed
+                            localStorage.clear();
+                            sessionStorage.clear();
+                            
+                            // Redirect to landing page
+                            window.location.href = 'landing.html';
+                        } else {
+                            console.error('Logout failed');
+                            alert('Failed to logout. Please try again.');
+                        }
+                    } catch (error) {
+                        console.error('Error during logout:', error);
+                        alert('An error occurred during logout. Please try again.');
+                    }
+                }
+            
+                // Function to toggle sidebar
+                function toggleSidebar() {
+                    const sidebar = document.getElementById("sidebar");
+                    const menuIcon = document.querySelector('.menu-icon');
+                    sidebar.classList.toggle("visible");
+                    menuIcon.classList.toggle("active");
+                }
+
+                // Function to toggle submenu
+                function toggleSubmenu(element) {
+                    const submenu = element.nextElementSibling;
+                    if (submenu) {
+                        submenu.classList.toggle("visible");
+                        const icon = element.querySelector('.fa-chevron-down');
+                        if (icon) {
+                            icon.style.transform = submenu.classList.contains('visible') ? 'rotate(180deg)' : 'rotate(0)';
+                        }
+                    }
+                }
+            
+                // Load projects when page loads
+                document.addEventListener('DOMContentLoaded', fetchAndDisplayProjects);
+            </script>
+
+            <footer><p>Copyright &copy &ltN-sync&gt</p></footer>
+        </div>
+    </body>
+</html>

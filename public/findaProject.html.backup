@@ -1,0 +1,310 @@
+<html>
+    <head>
+        <title>Find A Project</title>
+        <link rel="stylesheet" href="styles2.css">
+        <link rel="stylesheet" href="profilemenu.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            .submenu {
+                display: none; /* Hide submenus by default */
+            }
+        </style>
+    </head>
+    <body>
+        <header class="navBar">
+            <nav>
+                <div class="nav-container">
+                    <div class="nav-left">
+                        <a href="javascript:void(0);" class="menu-icon" onclick="toggleSideMenu()">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </div>
+                    <div class="logo">—studyNsync—</div>
+                    <div class="nav-right">
+                        <a href="javascript:void(0);" class="profile-icon" onclick="toggleProfileDropdown()">
+                            <i class="fa fa-user-circle"></i>
+                        </a>
+                        <!-- Profile Dropdown -->
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <div class="dropdown-item">
+                                <a href="profile.html" onclick="navigateTo('profile.html')">Profile</a>
+                            </div>
+                            <div class="dropdown-item">
+                                <a href="logout.html" onclick="navigateTo('logout.html')">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="side-menu" id="sideMenu">
+            <h2>Menu</h2>
+            <ul>
+                <li>
+                    <a href="javascript:void(0);" onclick="toggleSubMenu(this)" ondblclick="navigateTo('dashboard.html')">Dashboard</a>
+                    <ul class="submenu">
+                        <li><a href="explore.html" onclick="navigateTo('explore.html')" ondblclick="navigateTo('explore.html')">Explore</a></li>
+                        <li><a href="upload.html" onclick="navigateTo('upload.html')" ondblclick="navigateTo('upload.html')">Upload</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" onclick="toggleSubMenu(this)" ondblclick="navigateTo('resources.html')">Resources</a>
+                    <ul class="submenu">
+                        <li><a href="resources.html" onclick="navigateTo('resources.html')" ondblclick="navigateTo('resources.html')">View Resources</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" onclick="toggleSubMenu(this)" ondblclick="navigateTo('connect.html')">Connect</a>
+                    <ul class="submenu">
+                        <li><a href="findaProject.html" onclick="navigateTo('findaProject.html')" ondblclick="navigateTo('findaProject.html')">Find a Project</a></li>
+                        <li><a href="findabuddy.html" onclick="navigateTo('findabuddy.html')" ondblclick="navigateTo('findabuddy.html')">Find a buddy</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <a href="javascript:void(0);" onclick="toggleSideMenu()">Close Menu</a>
+        </div>
+
+        <script>
+            function toggleSideMenu() {
+                var sideMenu = document.getElementById("sideMenu");
+                sideMenu.style.display = (sideMenu.style.display === "block") ? "none" : "block";
+            }
+
+            function toggleSubMenu(element) {
+                var submenu = element.nextElementSibling; 
+                if (submenu.style.display === "block") {
+                    submenu.style.display = "none"; 
+                } else {
+                    submenu.style.display = "block";
+                }
+            }
+
+            function navigateTo(url) {
+                window.location.href = url;
+            }
+
+            // Toggle Profile Dropdown
+            function toggleProfileDropdown() {
+                var profileDropdown = document.getElementById("profileDropdown");
+                if (profileDropdown.style.display === "block") {
+                    profileDropdown.style.display = "none"; // Hide the dropdown
+                } else {
+                    profileDropdown.style.display = "block"; // Show the dropdown
+                }
+            }
+
+            // Close dropdown if clicked outside
+            window.onclick = function(event) {
+                var profileDropdown = document.getElementById("profileDropdown");
+                if (!event.target.matches('.profile-icon, .profile-icon *')) {
+                    profileDropdown.style.display = "none";
+                }
+            };
+
+            document.addEventListener('mousemove', (e) => {
+                const lightEffect = document.querySelector('.light-effect');
+                if (lightEffect) {
+                    lightEffect.style.setProperty('--mouse-x', `${e.clientX}px`);
+                    lightEffect.style.setProperty('--mouse-y', `${e.clientY}px`);
+                }
+            });
+        </script>
+
+        <h1>Find a Project</h1>
+
+        <div class="box" style="background-color: #f6f4f1; 
+        border: 0.3vh solid #8B4513; 
+        border-radius: 3vh; 
+        height: 65vh;
+        width: 65vw;
+        padding: 2vh; 
+        margin: auto;
+        margin-top: 5vh; 
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);">
+            <div style="display: flex; align-items: center; gap: 3vw;"> <!--gap between search bar and sort-->
+    
+                <!-- Search Bar Container -->
+                <div style="display: flex; align-items: center; background-color: #f6f4f1; border: 0.3vh solid #8B4513; border-radius: 2vh; width: 40vw; 
+                padding: 0.5vh; font-family: Baskerville, serif; margin-top: -53vh; margin-left: -4vw; box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);">
+                    
+                    <!-- Search Input -->
+                    <input type="text" id="searchInput" placeholder="Search..." 
+                        style="width: 100%; padding: 1vh 1vw; font-size: 2vh; border: none; outline: none; background-color: transparent; color: #5b5247;">
+                    
+                    <!-- Search Button -->
+                    <button style="background: none; border: none; cursor: pointer; font-size: 2vh; color: #5b5247; margin-right: 1vh;">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+                
+                <!-- Sort Text with Icon (outside the search bar) -->
+                <span style="font-size: 4vh; color: #5b5247; display: flex; align-items: center; cursor: pointer; font-family: baskerville, serif; 
+                margin-top: -53vh; margin-left: 3vw;">
+                    <i class="fa fa-sliders" style="margin-right: 0.5vh;"></i>&nbsp;Sort
+                </span>
+            </div>
+            
+            <!-- Font Awesome for icons -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+            <!-- Hackathon incoming-->
+            <img src="./hackathonIncoming.png" alt="Hackathon incoming" style="position: absolute; z-index: -1; margin-top: -20vh; 
+            margin-left: 0vw; width: 67vw">
+
+
+            <!-- October hackathon-->
+            <div style="width: 20vw; height: 25vh; background-color: #4b392b; color: #e6d4b9; position: absolute; top: 40vh; left: 2vw; font-family: Baskerville, serif; border-radius: 3vh; 
+            padding: 1.5vh; box-sizing: border-box; text-align: center; border: solid black;">
+                <h2 style="margin-top: 1vh; margin-bottom: 2vh; text-decoration: underline;">October Hackathon</h2>
+                <p style="margin: 0; font-size: 2.5vh;">3 buddies required</p>
+                <p style="margin: 1.5vh 0 2.5vh; font-size: 2.5vh;">5th-6th December from 10am to 3pm</p>
+                <a href="#" style="text-decoration: none; color: #e6d4b9; font-weight: bold; font-size: 2.5vh; text-decoration: underline;">Click here to know more!</a>
+            </div>
+
+
+            <!-- Web Tech Project -->
+            <div style="width: 20vw; height: 25vh; background-color: #927d5d; color: #4b392b; position: absolute; top: 40vh; left: 24vw; font-family: Baskerville, serif; border-radius: 3vh; 
+            padding: 1.5vh; box-sizing: border-box; text-align: center; border: solid black;">
+                <h2 style="margin-top: 1vh; margin-bottom: 2vh; text-decoration: underline;">Web Tech Project</h2>
+                <p style="margin: 0; font-size: 2.5vh;">1 buddy required</p>
+                <p style="margin: 1.5vh 0 2.5vh; font-size: 2.5vh;">Until 25th December</p>
+                <a href="#" style="text-decoration: none; color: #4b392b; font-weight: bold; font-size: 2.5vh; text-decoration: underline;">Click here to know more!</a>
+            </div>
+
+
+            <!--Ideathon-->
+            <div style="width: 20vw; height: 25vh; background-color: #4b392b; color: #e6d4b9; position: absolute; top: 40vh; left: 46vw; font-family: Baskerville, serif; border-radius: 3vh; 
+            padding: 1.5vh; box-sizing: border-box; text-align: center; border: solid black;">
+                <h2 style="margin-top: 1vh; margin-bottom: 2vh; text-decoration: underline;">Ideathon</h2>
+                <p style="margin: 0; font-size: 2.5vh;">2 buddies required</p>
+                <p style="margin: 1.5vh 0 2.5vh; font-size: 2.5vh;">15th January from 1pm to 5pm</p>
+                <a href="#" style="text-decoration: none; color: #e6d4b9; font-weight: bold; font-size: 2.5vh; text-decoration: underline;">Click here to know more!</a>
+            </div>
+
+        </div>
+
+        <main class="main-content">
+            <div class="projects-container">
+                <!-- Projects will be dynamically added here -->
+            </div>
+        </main>
+
+        <script>
+            async function fetchAndDisplayProjects() {
+                try {
+                    const response = await fetch('http://localhost:3000/api/projects');
+                    const projects = await response.json();
+                    
+                    const projectsContainer = document.querySelector('.projects-container');
+                    projectsContainer.innerHTML = ''; // Clear existing projects
+                    
+                    projects.forEach(project => {
+                        const dateFrom = new Date(project.dateFrom).toLocaleString();
+                        const dateTo = new Date(project.dateTo).toLocaleString();
+                        
+                        const projectCard = document.createElement('div');
+                        projectCard.className = 'project-card';
+                        projectCard.innerHTML = `
+                            <h3>${project.projectTitle}</h3>
+                            <span class="project-type">${project.projectType}</span>
+                            <p class="description">${project.projectDescription}</p>
+                            <div class="project-details">
+                                <p><strong>Skills Required:</strong> ${project.skillsRequired}</p>
+                                <p><strong>Date:</strong> ${dateFrom} to ${dateTo}</p>
+                                <p><strong>People Required:</strong> ${project.peopleRequired}</p>
+                                <p><strong>Contact:</strong> ${project.contactDetails}</p>
+                            </div>
+                            <button class="join-btn" onclick="window.location.href='mailto:?subject=Interested in Project: ${project.projectTitle}'">Join Project</button>
+                        `;
+                        
+                        projectsContainer.appendChild(projectCard);
+                    });
+                } catch (error) {
+                    console.error('Error fetching projects:', error);
+                    document.querySelector('.projects-container').innerHTML = '<p class="error">Failed to load projects. Please try again later.</p>';
+                }
+            }
+
+            // Load projects when page loads
+            document.addEventListener('DOMContentLoaded', fetchAndDisplayProjects);
+        </script>
+
+        <style>
+            .projects-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .project-card {
+                background: rgba(255, 255, 255, 0.9);
+                border-radius: 10px;
+                padding: 20px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.2s;
+            }
+
+            .project-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .project-card h3 {
+                margin: 0 0 10px 0;
+                color: #31281c;
+                font-family: baskerville, serif;
+            }
+
+            .project-type {
+                display: inline-block;
+                padding: 5px 10px;
+                background: #987d67;
+                color: white;
+                border-radius: 15px;
+                font-size: 0.9em;
+                margin-bottom: 10px;
+            }
+
+            .description {
+                color: #4a4a4a;
+                margin-bottom: 15px;
+            }
+
+            .project-details {
+                font-size: 0.9em;
+                color: #666;
+            }
+
+            .project-details p {
+                margin: 5px 0;
+            }
+
+            .join-btn {
+                display: block;
+                width: 100%;
+                padding: 10px;
+                background: #987d67;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                margin-top: 15px;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+
+            .join-btn:hover {
+                background: #7d6754;
+            }
+
+            .error {
+                color: #ff4444;
+                text-align: center;
+                padding: 20px;
+            }
+        </style>
+
+        <footer><p>Copyright &copy &ltN-sync&gt</p></footer>
+    </body>
+</html>

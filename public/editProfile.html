@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile</title>
+  <link rel="stylesheet" href="editProfile.css">
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Fetch current user profile
+      fetch('/user/profile')
+        .then(response => response.json())
+        .then(userData => {
+          // Pre-fill the form with current profile data
+          document.getElementById('username').value = userData.username || '';
+          document.getElementById('email').value = userData.email || '';
+          document.getElementById('contact').value = userData.contact || '';
+          document.getElementById('srn').value = userData.srn || '';
+          document.getElementById('semester').value = userData.semester || '';
+
+        })
+        .catch(error => {
+          console.error('Error fetching profile:', error);
+          showError('Failed to load profile data');
+        });
+    });
+
+    function showError(message) {
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'error-message';
+      errorDiv.textContent = message;
+      document.getElementById('editProfileForm').prepend(errorDiv);
+      setTimeout(() => errorDiv.remove(), 5000);
+    }
+
+    function showSuccess(message) {
+      const successDiv = document.createElement('div');
+      successDiv.className = 'success-message';
+      successDiv.textContent = message;
+      document.getElementById('editProfileForm').prepend(successDiv);
+      setTimeout(() => successDiv.remove(), 3000);
+    }
+
+    function cancelEdit() {
+      window.location.href = 'profile.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById("editProfileForm").addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const email = document.getElementById("email").value;
+        const contact = document.getElementById("contact").value;
+        const srn = document.getElementById("srn").value;
+        const semester = document.getElementById("semester").value
+
+        try {
+          const response = await fetch("/user/update-profile", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: 'include',
+            body: JSON.stringify({ username, email, contact, srn, semester}),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            showSuccess(data.message);
+            setTimeout(() => window.location.href = "profile.html", 2000);
+          } else {
+            showError(data.message);
+          }
+        } catch (error) {
+          console.error("Error updating profile:", error);
+          showError("An error occurred while updating the profile.");
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>Edit Profile</h1>
+  <div class="edit-profile-container">  
+    <form id="editProfileForm">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" >
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email">
+      </div>
+      <div class="form-group">
+        <label for="contact">Contact</label>
+        <input type="text" id="contact" name="contact">
+      </div>
+      <div class="form-group">
+        <label for="srn">SRN</label>
+        <input type="text" id="srn" name="srn">
+      </div>
+      <div class="form-group">
+        <label for="semester">Semester</label>
+        <input type="text" id="semester" name="semester">
+      </div>
+      <div class="button-container">
+        <button type="submit" class="update-btn">Update Profile</button>
+        <button type="button" class="cancel-btn" onclick="cancelEdit()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

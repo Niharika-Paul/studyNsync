@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <title>User Profile</title>
+  <script src="logout.js"></script>
+  <style>
+
+    .profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 90%;
+    margin: 20% auto;
+    margin-top: 18%;
+    padding: 35px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .banner .profile-icon {
+    font-size: 15vh;
+    color:#ffffff;
+    position: absolute;
+    left: 1%;
+    top: 40%;
+    }
+
+    .banner h2{
+    position: absolute;
+    top: 65%;
+    left: 10%;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    letter-spacing: 1.5;
+    color: #ffffff;
+    }
+
+    .banner{
+    background-image: url('banner.jpg');
+    opacity: 90%;
+    width: 90%;
+    height: 25%;
+    position: absolute;
+    left: 5%;
+    }
+
+    .info-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 40px;
+    }
+
+    .info-item {
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    }
+
+    .edit-profile-btn{
+    padding: 10px 30px;
+    background-color: #090202;
+    color: #f6f4f1;
+    font-size: 2.5vh;
+    font-family: baskerville, serif;
+    border: none;
+    border-radius: 0.5vh;
+    cursor: pointer;
+    margin-right: 10px;
+    }
+
+    .edit-profile-btn:hover {
+    background-color: #846a56;
+    color: #090202
+    }
+
+    .edit-profile-btn:active{
+    box-shadow: 0 5px #666;
+    transform: translateY(3px)
+    }
+
+    .logout-btn {
+      padding: 10px 30px;
+      background-color: #c41e3a;
+      color: #f6f4f1;
+      font-size: 2.5vh;
+      font-family: baskerville, serif;
+      border: none;
+      border-radius: 0.5vh;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    .logout-btn:hover {
+      background-color: #8b0000;
+    }
+
+    .logout-btn:active {
+      box-shadow: 0 5px #666;
+      transform: translateY(3px)
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    footer{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #f6f4f1;
+    }
+</style>
+</head>
+<body>
+  <h1 style="color: #000; font-family: baskerville,serif;"><center>PROFILE</center></h1>
+  <div class="banner">
+    <i class="fas fa-user-circle profile-icon"></i>
+    <h2 id="greeting">Hello, User!</h2>
+  </div>
+  <div class="profile-container">
+    <div class="info-section">
+      <div class="info-item">
+        <strong>Username:</strong> <span id="username">Loading...</span>
+      </div>
+      <div class="info-item">
+        <strong>Email ID:</strong> <span id="email">Loading...</span>
+      </div>
+      <div class="info-item">
+        <strong>Contact:</strong> <span id="contact">Loading...</span>
+      </div>
+      <div class="info-item">
+        <strong>SRN:</strong> <span id="srn">Loading...</span>
+      </div>
+      <div class="info-item">
+        <strong>Branch:</strong> <span id="branch">Loading...</span>
+      </div>
+      <div class="info-item">
+        <strong>Resources uploaded:</strong> <span id="uploadedResourcesCount">Loading...</span>
+      </div>
+    </div>
+    <div class="button-container">
+      <button class="edit-profile-btn" onclick="editProfile()">Edit Profile</button>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+  </div>
+  
+  <footer><p>Copyright &copy; &ltN-sync&gt</p></footer>
+  <script>
+    async function fetchProfile() {
+      try {
+        const response = await fetch("/user/profile",{
+          credentials:"include"});
+        const data = await response.json();
+        
+        if (response.ok) {
+          // Populate fields
+          document.getElementById("greeting").textContent = `Hello, ${data.name || "User"}!`;
+          document.getElementById("username").textContent = data.username || "N/A";
+          document.getElementById("email").textContent = data.email || "N/A";
+          document.getElementById("contact").textContent = data.contact || "Not Provided";
+          document.getElementById("srn").textContent = data.srn || "N/A";
+          document.getElementById("branch").textContent = `CSE (AI & ML) - ${data.semester || "N/A"}`;
+          document.getElementById("uploadedResourcesCount").textContent = data.resourcesUploadedCount || 0;
+        } else {
+          alert(data.message || "Failed to load profile.");
+        }
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+        alert("Error loading profile data.");
+      }
+    }
+
+    function editProfile() {
+      window.location.href = "editprofile.html";
+    }
+
+    fetchProfile();
+  </script>
+</body>
+</html>

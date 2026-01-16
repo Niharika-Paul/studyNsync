@@ -1,0 +1,256 @@
+<html>
+    <head>
+        <title>Resources</title>
+        
+        <link rel="stylesheet" href="profilemenu.css">
+        <link rel="stylesheet" href="sidemenu.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="logout.js"></script>
+        <style>
+            .navBar {
+                background-color: rgba(245, 230, 211, 0.95);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                position: absolute;
+                width: 100vw;
+                top: 0;
+            }
+
+            .navBar nav ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                height: 80px;
+                padding: 0 2rem;
+            }
+
+            .logo {
+                color: #2d1810;
+                font-family: Baskerville, serif;
+                font-size: 2rem;
+                font-weight: 600;
+                text-shadow: 1px 1px 2px rgba(245, 230, 211, 0.4);
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .menu-icon, .profile-icon {
+                color: #2d1810;
+                font-size: 1.5rem;
+                padding: 0.75rem;
+                cursor: pointer;
+                transition: color 0.3s ease;
+            }
+
+            .menu-icon:hover, .profile-icon:hover {
+                color: #7f5539;
+            }
+
+            .nav-right {
+                display: flex;
+                align-items: center;
+            }
+
+            /* Resources title */
+            h1 {
+                position: absolute;
+                top: 15%;
+                left: 50%;
+                font-size: 50px;
+                font-family: bakersville, serif;
+                letter-spacing: 3px;
+                transform: translate(-50%, -50%);
+                color: #846a56;
+                text-align: center;
+                font-weight: lighter;
+                z-index: 1;
+            }
+
+            .container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                background-color: #5b5247;
+                padding-top: 20vh; 
+                overflow: hidden;
+            }
+
+            .box {
+                width: 60vw;
+                height: 60vh;
+                font-family: baskerville, serif;
+                border: 2px solid #5b5247; 
+                margin: 10vh;
+                margin-top: 7vh;
+                margin-left: 1vw;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 15vw;
+                border-radius: 1vw; 
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .box a {
+                display: inline-block;
+                transition: transform 0.3s, box-shadow 0.3s; 
+            }
+
+            .box img {
+                width: 17vw; 
+                height: auto; /* Maintains aspect ratio */
+                border-radius: 1vw; 
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+            }
+
+            .box a:hover img {
+                transform: scale(1.05); 
+                box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); 
+            }
+
+            footer{
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                color: #000000;
+                font-family:Georgia, 'Times New Roman', Times, serif;
+                text-align: center;
+                font-style: italic;
+                font-size: 1.5vh;
+                margin-top: auto;
+                left: 0;
+            }
+
+        </style>
+    </head>
+    <body>
+        <header class="navBar">
+            <nav>
+                <ul>    
+                    <div class="logo">—studyNsync—</div>
+                    <a href="javascript:void(0);" class="menu-icon" onclick="toggleSidebar()">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                    <div class="nav-right">
+                        <a href="javascript:void(0);" class="profile-icon" onclick="toggleProfileDropdown()">
+                            <i class="fa fa-user-circle"></i>
+                        </a>
+                        <!-- Profile Dropdown -->
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <div class="dropdown-item">
+                                <a href="profile.html" onclick="navigateTo('profile.html')">Profile</a>
+                            </div>
+                            <div class="dropdown-item">
+                                <a href="#" onclick="logout(); return false;">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">StudyNSync</div>
+                <div class="toggle-btn" onclick="toggleSidebar()">
+                    <i class="fa fa-chevron-left"></i>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link">
+                        <i class="fa fa-dashboard"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:void(0);" class="nav-link active" onclick="toggleSubmenu(this)">
+                        <i class="fa fa-book"></i>
+                        <span>Resources</span>
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="javascript:void(0);" onclick="navigateTo('explore.html')">Explore</a></li>
+                        <li><a href="javascript:void(0);" onclick="navigateTo('upload.html')">Upload</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:void(0);" class="nav-link" onclick="toggleSubmenu(this)">
+                        <i class="fa fa-users"></i>
+                        <span>Connect</span>
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="javascript:void(0);" onclick="navigateTo('findabuddy.html')">Find a Buddy</a></li>
+                        <li><a href="javascript:void(0);" onclick="navigateTo('findaProject.html')">Find a Project</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <script>
+                function toggleSidebar() {
+                    const sidebar = document.getElementById("sidebar");
+                    const menuIcon = document.querySelector('.menu-icon');
+                    sidebar.classList.toggle("visible");
+                    menuIcon.classList.toggle("active");
+                }
+
+                function toggleSubmenu(element) {
+                    const submenu = element.nextElementSibling;
+                    if (submenu) {
+                        submenu.classList.toggle("visible");
+                        const icon = element.querySelector('.fa-chevron-down');
+                        if (icon) {
+                            icon.style.transform = submenu.classList.contains('visible') ? 'rotate(180deg)' : 'rotate(0)';
+                        }
+                    }
+                }
+
+                function navigateTo(url) {
+                    window.location.href = url;
+                }
+
+                // Toggle Profile Dropdown
+                function toggleProfileDropdown() {
+                    var profileDropdown = document.getElementById("profileDropdown");
+                    if (profileDropdown.style.display === "block") {
+                        profileDropdown.style.display = "none"; // Hide the dropdown
+                    } else {
+                        profileDropdown.style.display = "block"; // Show the dropdown
+                    }
+                }
+
+                // Close dropdown if clicked outside
+                window.onclick = function(event) {
+                    var profileDropdown = document.getElementById("profileDropdown");
+                    if (!event.target.matches('.profile-icon, .profile-icon *')) {
+                        profileDropdown.style.display = "none";
+                    }
+                };
+            </script>
+
+            <h1>Resources</h1>
+
+            <div class = "box">
+                <a href="upload.html">
+                    <img src="./uploadFiles.png" alt="upload files">
+                </a>
+
+                <a href="explore.html">
+                    <img src="./exploreResources.png" alt="explore resources">
+                </a>
+            </div>
+
+            <footer><p>Copyright &copy &ltN-sync&gt</p></footer>
+        </div>
+    </body>
+</html>
