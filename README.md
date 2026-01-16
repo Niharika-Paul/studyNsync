@@ -14,8 +14,6 @@ Allows users to find the perfect teammates for hackathons, class assignments, an
 - [Contributing](#contributing)
 - [Contributors](#contributors)
 - [Roadmap / Next steps](#roadmap--next-steps)
-- [License](#license)
-- [Contact](#contact)
 
 ## Demo
 (Insert link to a living demo or screenshots here — you can add images to the repo and reference them.)
